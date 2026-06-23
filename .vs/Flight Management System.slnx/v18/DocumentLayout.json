@@ -1,0 +1,102 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\fathi\\OneDrive\\Desktop\\Backend-coding\\Flight Management System\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B7D88DB0-6A88-4B14-B2A3-131574EB75EE}|Flight Management System\\Flight Management System.csproj|c:\\users\\fathi\\onedrive\\desktop\\backend-coding\\flight management system\\flight management system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7D88DB0-6A88-4B14-B2A3-131574EB75EE}|Flight Management System\\Flight Management System.csproj|solutionrelative:flight management system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7D88DB0-6A88-4B14-B2A3-131574EB75EE}|Flight Management System\\Flight Management System.csproj|c:\\users\\fathi\\onedrive\\desktop\\backend-coding\\flight management system\\flight management system\\models\\aircraft.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7D88DB0-6A88-4B14-B2A3-131574EB75EE}|Flight Management System\\Flight Management System.csproj|solutionrelative:flight management system\\models\\aircraft.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7D88DB0-6A88-4B14-B2A3-131574EB75EE}|Flight Management System\\Flight Management System.csproj|c:\\users\\fathi\\onedrive\\desktop\\backend-coding\\flight management system\\flight management system\\models\\pilot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7D88DB0-6A88-4B14-B2A3-131574EB75EE}|Flight Management System\\Flight Management System.csproj|solutionrelative:flight management system\\models\\pilot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7D88DB0-6A88-4B14-B2A3-131574EB75EE}|Flight Management System\\Flight Management System.csproj|c:\\users\\fathi\\onedrive\\desktop\\backend-coding\\flight management system\\flight management system\\models\\flight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7D88DB0-6A88-4B14-B2A3-131574EB75EE}|Flight Management System\\Flight Management System.csproj|solutionrelative:flight management system\\models\\flight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 287,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Pilot.cs",
+              "DocumentMoniker": "C:\\Users\\fathi\\OneDrive\\Desktop\\Backend-coding\\Flight Management System\\Flight Management System\\Models\\Pilot.cs",
+              "RelativeDocumentMoniker": "Flight Management System\\Models\\Pilot.cs",
+              "ToolTip": "C:\\Users\\fathi\\OneDrive\\Desktop\\Backend-coding\\Flight Management System\\Flight Management System\\Models\\Pilot.cs",
+              "RelativeToolTip": "Flight Management System\\Models\\Pilot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-23T08:31:36.179Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Aircraft.cs",
+              "DocumentMoniker": "C:\\Users\\fathi\\OneDrive\\Desktop\\Backend-coding\\Flight Management System\\Flight Management System\\Models\\Aircraft.cs",
+              "RelativeDocumentMoniker": "Flight Management System\\Models\\Aircraft.cs",
+              "ToolTip": "C:\\Users\\fathi\\OneDrive\\Desktop\\Backend-coding\\Flight Management System\\Flight Management System\\Models\\Aircraft.cs",
+              "RelativeToolTip": "Flight Management System\\Models\\Aircraft.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-23T08:12:28.517Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Flight.cs",
+              "DocumentMoniker": "C:\\Users\\fathi\\OneDrive\\Desktop\\Backend-coding\\Flight Management System\\Flight Management System\\Models\\Flight.cs",
+              "RelativeDocumentMoniker": "Flight Management System\\Models\\Flight.cs",
+              "ToolTip": "C:\\Users\\fathi\\OneDrive\\Desktop\\Backend-coding\\Flight Management System\\Flight Management System\\Models\\Flight.cs",
+              "RelativeToolTip": "Flight Management System\\Models\\Flight.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-23T07:51:46.575Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\fathi\\OneDrive\\Desktop\\Backend-coding\\Flight Management System\\Flight Management System\\Program.cs",
+              "RelativeDocumentMoniker": "Flight Management System\\Program.cs",
+              "ToolTip": "C:\\Users\\fathi\\OneDrive\\Desktop\\Backend-coding\\Flight Management System\\Flight Management System\\Program.cs",
+              "RelativeToolTip": "Flight Management System\\Program.cs",
+              "ViewState": "AgIAAPUAAAAAAAAAAAAAAJIAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-23T04:59:27.838Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedHeight": 113,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
