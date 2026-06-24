@@ -140,30 +140,54 @@ namespace Flight_Management_System
         {
             Console.WriteLine("\n=== Schedule Flight ===");
 
-            Aircraft openAircraft = context.Aircrafts.Where(a => a.aircraftId == aircraftId && a.isOperational == true)
-                                                           .ToList();
-
-            Console.WriteLine($"\n Available Aircraft :");
-            foreach (Aircraft a in openAircraft)
+            if (context.Aircrafts.Count == 0)
             {
-                Console.WriteLine($" Aircraft ID: {a.aircraftId}  |  isOperational: {a.isOperational}");
+                Console.WriteLine("No Aircraft Available");
+                return;
+            }
+
+            if (context.Pilots.Count == 0)
+            {
+                Console.WriteLine("No Pilots Available");
+                return;
+            }
+            //=================================================
+            Console.WriteLine($"\n Available Aircraft :");
+
+            foreach (Aircraft a in context.Aircrafts.Where(a => a.isOperational == true))
+            {
+                Console.WriteLine($" Aircraft ID: {a.aircraftId}  | Model: {a.model} | Total no.of Seats: {a.totalSeats}");
             }
 
             Console.Write("Enter Aircraft ID: ");
             int aircraftId = int.Parse(Console.ReadLine());
 
-            List<Pilot> openPilot = context.Pilots.Where(p => p.pilotId == pilotId && p.isAvailable == true)
-                                                  .ToList();
-
-            Console.WriteLine($"\n Available Pilot :");
-            foreach (Pilot p in openPilot)
+            bool result01 = context.Aircrafts.Any(a => a.aircraftId == aircraftId && a.isOperational == true);
+            if (result01 == false) 
             {
-                Console.WriteLine($" pilot ID: {p.pilotId}  |  isAvailable: {p.isAvailable}");
+                Console.WriteLine("Aircraft Not Found Or Not Operational");
+                return;
+            }
+
+            //==================================================
+            Console.WriteLine($"\n Available Pilot :");
+
+            foreach (Pilot p in context.Pilots.Where(p => p.isAvailable == true))
+            {
+                Console.WriteLine($" pilot ID: {p.pilotId} | Pilot Name: {p.pilotName}");
             }
 
             Console.Write("Enter Pilot ID: ");
             int pilotId = int.Parse(Console.ReadLine());
 
+            bool result02 = context.Pilots.Any(p => p.pilotId == pilotId);
+            if (result02 == false)
+            {
+                Console.WriteLine("Pilot Not Found Or Not Available");
+                return;
+            }
+
+            //===================================================
             Console.Write("Origin: ");
             string origin = Console.ReadLine();
 
@@ -180,6 +204,10 @@ namespace Flight_Management_System
             decimal ticketPrice = decimal.Parse(Console.ReadLine());
 
             int flightId = context.Flights.Count + 1;
+
+            Aircraft aircraft = context.Aircrafts.FirstOrDefault(a => a.aircraftId == aircraftId);
+
+            Pilot pilot = context.Pilots.FirstOrDefault(p => p.pilotId == pilotId); 
 
             context.Flights.Add( new Flight
                 {
@@ -198,36 +226,171 @@ namespace Flight_Management_System
 
             pilot.isAvailable = false;
 
-            Console.WriteLine("Flight Scheduled Successfully");
+            Console.WriteLine("\nFlight Scheduled Successfully");
+            Console.WriteLine($"Flight Code: OA-{200 + flightId}");
         }
 
         public static void BookFlight() // 06 
         {
+            Console.WriteLine("\n=== Book Flight ===");
 
+            Console.WriteLine("Enter Passenger ID:");
+            int passengerId = int.Parse(Console.ReadLine());
+
+            Passenger passenger = context.Passengers.FirstOrDefault(p => p.passengerId == passengerId);
+
+            if (passenger == null)
+            {
+                Console.WriteLine(RegisterPassenger);
+            }
+
+            Console.Write("Enter Destination: ");
+            string destination = Console.ReadLine();
+
+            List<Flight> AvailableFlights = context.Flights.Where(f =>  f.destination == destination && f.status == "Scheduled" && f.availableSeats > 0)
+                                                           .ToList();
+
+            if (AvailableFlights.Count == 0)
+            {
+                Console.WriteLine("No Available Flights");
+                return;
+            }
+
+            foreach (Flight flight in AvailableFlights)
+            {
+                Console.WriteLine($"{flight.flightId} | {flight.flightCode}");
+            }
+
+                Console.WriteLine("Enter Suitable Flight ID:");
+                int flightId = int.Parse(Console.ReadLine());
+
+            Flight selectedFlight = context.Flights.FirstOrDefault(f => f.flightId == flightId);
+
+            if (selectedFlight == null)
+            {
+                Console.WriteLine("Flight Not Found");
+                return;
+            }
+
+            Console.WriteLine("Enter Booking Date: ");
+                string bookingDate = Console.ReadLine();
+
+            int bookingId = context.Bookings.Count + 1;
+
+            context.Bookings.Add(new Booking
+            {
+                bookingId = bookingId,
+                passengerId = passengerId,
+                flightId = flightId,
+                bookingDate = bookingDate,
+                seatNumber = $"{selectedFlight.availableSeats}",
+                totalPrice = selectedFlight.ticketPrice,
+                status = "Confirmed"
+            });
+
+            selectedFlight.availableSeats--;
+
+            Console.WriteLine($"Booking Created Successfully.. Booking ID: {bookingId}");
         }
 
         public static void CancelBooking() // 07
         {
+            Console.WriteLine("\n=== Cancel Booking ===");
+
+            Console.WriteLine("Enter Booking ID:");
+            int bookingId = int.Parse(Console.ReadLine());
+
+            Booking booking = context.Bookings.FirstOrDefault(b=> b.bookingId == bookingId);
+
+            if (booking == null)
+            {
+                Console.WriteLine("Booking Not Found .. Enter correct ID ");
+            }
+
+            booking.status = "Cancelled";
+
+            Flight flight = context.Flights.FirstOrDefault(f => f.flightId == booking.flightId);
+
+            flight.availableSeats++;
+
+            Console.WriteLine("Booking Cancelled Successfully");
 
         }
 
         public static void DepartFlight() // 08 
         {
+            Console.WriteLine("\n=== Depart Flight ===");
+
+            Console.WriteLine("Enter Flight ID:");
+            int flightId = int.Parse(Console.ReadLine());
+
+            Flight flight = context.Flights.FirstOrDefault(f=> f.flightId == flightId);
+
+            if (flight == null)
+            {
+                Console.WriteLine("Flight Not Found");
+                return;
+            }
+
+            if (flight.status != "Scheduled")
+            {
+                Console.WriteLine("Only Scheduled Flights Can Depart");
+                return;
+            }
+            flight.status = "Departed";
+
+            Pilot pilot = context.Pilots.FirstOrDefault(p => p.pilotId == flight.pilotId);
+
+            pilot.flightHours += flight.flightDuration;
+
+            Console.WriteLine("Flight Departed Successfully");
+            Console.WriteLine($"Pilot Flight Hours Updated To: {pilot.flightHours}");
 
         }
 
         public static void CancelFlight() // 09 
         {
+            Console.WriteLine("\n=== Cancel Flight ===");
 
+            Console.WriteLine("Enter Flight ID:");
+            int flightId = int.Parse(Console.ReadLine());
+
+            Flight flight = context.Flights.FirstOrDefault(f => f.flightId == flightId);
+
+            if (flight == null)
+            {
+                Console.WriteLine("Flight Not Found");
+                return;
+            }
+
+           flight.status = "Cancelled";
+
+            List<Booking> booking = context.Bookings.Where(b => b.flightId == flightId && b.status == "Confirmed")
+                                                    .ToList();
+
+            foreach (Booking bookings in booking)
+            {
+                bookings.status = "Cancelled";
+            }
+
+            Pilot pilot = context.Pilots.FirstOrDefault(p => p.pilotId == flight.pilotId);
+
+            pilot.isAvailable = true;
+
+            Console.WriteLine($"Flight {flight.flightCode} Cancelled Successfully");
         }
 
         public static void PassengerBookingHistory() // 10 
         {
+            Console.WriteLine("\n=== Passenger Booking History ===");
+
 
         }
 
         public static void FlightRevenueLoadFactorReport() // 11 
         {
+            Console.WriteLine("\n=== Flight Revenue Load Factor Report ===");
+
 
         }
 
