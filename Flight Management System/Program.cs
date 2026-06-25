@@ -128,7 +128,7 @@ namespace Flight_Management_System
             {
                 Console.WriteLine(
                     $"{flight.flightCode} | " +
-                    $"{flight.origin} -> {flight.destination} | " +
+                    $"{flight.origin} => {flight.destination} | " +
                     $"{flight.departureDate} {flight.departureTime} | " +
                     $"Seats: {flight.availableSeats} | " +
                     $"Price: {flight.ticketPrice} | " +
@@ -384,17 +384,86 @@ namespace Flight_Management_System
         {
             Console.WriteLine("\n=== Passenger Booking History ===");
 
+            Console.Write("Enter Passenger ID: ");
+            int passengerId = int.Parse(Console.ReadLine());
 
+            Passenger passenger = context.Passengers.FirstOrDefault(p => p.passengerId == passengerId);
+
+            if (passenger == null)
+            {
+                Console.WriteLine("Passenger Not Found");
+                return;
+            }
+
+            List<Booking> bookings = context.Bookings.Where(b => b.passengerId == passengerId )
+                                                     .ToList();
+
+            if (bookings.Count == 0)
+            {
+                Console.WriteLine("No Bookings Found");
+                return;
+            }
+
+            foreach (Booking booking in bookings) 
+            {
+                Flight flight = context.Flights.FirstOrDefault(f => f.flightId == booking.flightId);
+
+                Console.WriteLine(
+                    $"{flight.flightCode} | " +
+                    $"{flight.origin} => {flight.destination} | " +
+                    $"{flight.departureDate} | " +
+                    $"{booking.seatNumber} | " +
+                    $"{booking.totalPrice} | " +
+                    $"{booking.status}");
+
+            }
+
+            decimal FinalTotalPrice = context.Bookings.Where(b => b.passengerId == passengerId && b.status == "Confirmed")
+                                                      .Sum(b => b.totalPrice);
+
+            Console.WriteLine($"\nFinal Total Price = {FinalTotalPrice}");
         }
 
-        public static void FlightRevenueLoadFactorReport() // 11 
+        public static void FlightRevenueLoadFactorReport() // 11
         {
             Console.WriteLine("\n=== Flight Revenue Load Factor Report ===");
 
+            List<Flight> flights = context.Flights.OrderByDescending(f => context.Bookings.Where(b => b.flightId == f.flightId && b.status == "Confirmed")  
+                                                                                          .Sum(b => b.totalPrice))
+                                                                                          .ToList();
 
+            foreach (Flight flight in flights)
+            {
+                int confirmedBookings = context.Bookings.Count(b => b.flightId == flight.flightId && b.status == "Confirmed");
+
+                decimal totalRevenue = context.Bookings.Where(b => b.flightId == flight.flightId && b.status == "Confirmed") 
+                                                       .Sum(b => b.totalPrice);
+
+                Aircraft aircraft = context.Aircrafts.FirstOrDefault(a => a.aircraftId == flight.aircraftId);
+
+                double loadFactor = 0; 
+
+                if (aircraft != null)
+                {
+                    loadFactor = (double)confirmedBookings / aircraft.totalSeats * 100; 
+                }
+
+                Console.WriteLine(
+                    $"Flight Code: {flight.flightCode} | " +
+                    $"Route: {flight.origin} => {flight.destination} | " +
+                    $"Confirmed Bookings: {confirmedBookings} | " +
+                    $"Revenue: {totalRevenue} | " +
+                    $"Load Factor: {loadFactor:F2}%");
+            }
+
+            decimal TotalRevenue = context.Bookings.Where(b => b.status == "Confirmed") 
+                                                        .Sum(b => b.totalPrice);
+
+            Console.WriteLine($"\nGrand Total Revenue = {TotalRevenue}");
         }
 
-
+        //======================================================================//
+        //======================================================================//
         static void Main(string[] args)
         {
             bool exit = false;
@@ -403,7 +472,7 @@ namespace Flight_Management_System
             {
                 Console.WriteLine("\n========================================");
                 Console.WriteLine("   Flight Management System   ");
-                Console.WriteLine("========================================");
+                Console.WriteLine("==========================================");
                 Console.WriteLine(" 1  - Register Passenger");
                 Console.WriteLine(" 2  - Add Aircraft");
                 Console.WriteLine(" 3  - Register Pilot");
@@ -416,7 +485,7 @@ namespace Flight_Management_System
                 Console.WriteLine(" 10 - Passenger Booking History");
                 Console.WriteLine(" 11 - Flight Revenue & Load Factor Report");
                 Console.WriteLine(" 0  - Exit");
-                Console.WriteLine("========================================");
+                Console.WriteLine("==========================================");
                 Console.Write("Select option: ");
 
                 int option = int.Parse(Console.ReadLine());
